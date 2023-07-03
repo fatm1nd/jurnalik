@@ -1,0 +1,33 @@
+name: Deployment to Host
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check the success build
+      run: docker compose build
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy on remote remote server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USER}}
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
+          password: ${{ secrets.SSH_PASSWD }}
+          script: |
+            cd ${{ secrets.PROJECT_FOLDER }}
+            ls -al
+            git checkout main
+            git pull
+            docker-compose --file docker-compose.yml down
+            docker-compose build
+            docker-compose --file docker-compose.yml up -d
