@@ -1,17 +1,18 @@
 name: Deployment to Host
 
 on:
-  push:
+  pull_request:
     branches: [ "main" ]
 
 jobs:
-
+  
   build:
-
+    
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Check the success build
+      working-directory: ./backend
       run: docker compose build
   run:
     runs-on: ubuntu-latest
