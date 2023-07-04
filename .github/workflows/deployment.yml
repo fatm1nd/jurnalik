@@ -2,7 +2,7 @@ name: Deployment to Host
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "DevOps" ]
 
 jobs:
   lint:
