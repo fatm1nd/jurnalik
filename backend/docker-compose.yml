@@ -11,7 +11,7 @@ services:
   postgres:
     image: postgres:13.3
     volumes:
-    - ./postgresql:/var/lib/postgresql
+    - ./postgresql:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_USER: "${POSTGRES_USER}"
