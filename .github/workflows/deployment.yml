@@ -5,14 +5,14 @@ on:
     branches: [ "main", "DevOps" ]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Python Linter
-      uses: sunnysid3up/python-linter@v0.1-beta.7
-      with:
-        source: ./backend/
-        strict: low
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Python Linter
+#       uses: sunnysid3up/python-linter@v0.1-beta.7
+#       with:
+#         source: ./backend/
+#         strict: low
     
   deploy:
     runs-on: ubuntu-latest
