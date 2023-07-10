@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS prepared_posts(
     post_id INT,
     user_id INT,
     group_id BIGINT,
-    label VARCHAR
+    category VARCHAR,
     PRIMARY KEY (post_id, user_id)
 );
 
