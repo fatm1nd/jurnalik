@@ -7,6 +7,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
+from dotenv import dotenv_values
+
+
+config = dotenv_values(".env")
+
+print(config["HOST"])
+HOST = config["HOST"]
+PORT = config["PORT"]
+USER = config["USER"]
+PASSWORD = config["PASSWORD"]
+DATABASE = config["DATABASE"]
 
 
 def tokenizer_data(data):
@@ -77,7 +88,7 @@ def decoder(label):
 
 
 def get_one(user_id):
-    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
+    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     data = {'user_id': [], 'post_id': [], 'text': []}
@@ -96,7 +107,7 @@ def get_one(user_id):
 
 
 def delete_data():
-    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
+    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     cur.execute("DELETE FROM prepared_posts")
@@ -105,7 +116,7 @@ def delete_data():
 
 
 def get_all():
-    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
+    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     arr_data = []
@@ -133,7 +144,7 @@ def get_all():
 
 
 def push(data, user_id):
-    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
+    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     arr_remove = remove_duplicates(data['text_clean'])
