@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS items(
     type VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS groups_an_channels(
+CREATE TABLE IF NOT EXISTS groups_and_channels(
     group_id INT PRIMARY KEY,
     group_name varchar,
     picture varchar,
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS groups_an_channels(
 );
 
 CREATE TABLE IF NOT EXISTS telegram_channels(
-    group_id INT PRIMARY KEY,
+    group_id INT,
     user_id varchar
 );
 
 CREATE TABLE IF NOT EXISTS vk_table(
     vk_id INT PRIMARY KEY,
-    vk_token VARCHAR 
+    vk_token VARCHAR
 );
