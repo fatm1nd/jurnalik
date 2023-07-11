@@ -1,0 +1,35 @@
+name: Deployment to Host
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Python Linter
+      uses: sunnysid3up/python-linter@v0.1-beta.7
+      with:
+        source: ./backend/
+        strict: low
+    
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy on remote remote server      
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          working-directory: ./backend
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USER}}
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
+          password: ${{ secrets.SSH_PASSWD }}
+          script: |
+            cd ${{ secrets.PROJECT_FOLDER }}
+            ls -al
+            git checkout main
+            git pull
+            docker compose down
+            docker compose build
+            docker compose up -d

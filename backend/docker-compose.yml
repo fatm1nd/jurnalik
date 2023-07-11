@@ -1,0 +1,37 @@
+version: "3.9"
+
+# networks:
+#   default:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 10.0.0.0/24
+
+services:
+  postgres:
+    image: postgres:13.3
+    volumes:
+    - ./postgresql:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "5432:5432"
+
+
+  client_service:
+    build: client/
+
+
+    depends_on:
+      - postgres
+  
+  telegram_selector:
+    build: selector_services/telegram_selector
+    
+
+    depends_on:
+      - postgres
+
+  
