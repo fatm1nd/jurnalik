@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS groups_and_channels(
 
 CREATE TABLE IF NOT EXISTS telegram_channels(
     group_id INT,
-    user_id varchar
+    user_id INT
 );
 
 CREATE TABLE IF NOT EXISTS vk_table(
