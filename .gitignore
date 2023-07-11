@@ -1,1 +1,5 @@
 backend/.env
+backend/ML/.env
+backend/ML/venv
+backend/ML/__pycache__
+backend/ML/__pycache__/*
