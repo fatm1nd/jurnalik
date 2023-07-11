@@ -4,3 +4,7 @@ nltk
 pandas
 scikit-learn
 psycopg2
+grpcio 
+grpcio-tools 
+googleapis-common-protos
+python-dotenv
