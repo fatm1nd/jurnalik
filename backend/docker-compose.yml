@@ -22,15 +22,20 @@ services:
 
   client_service:
     build: client/
-
-
     depends_on:
       - postgres
+    ports:
+     - 80:80
   
   telegram_selector:
     build: selector_services/telegram_selector
     
-
+    depends_on:
+      - postgres
+  
+  ml_service:
+    build: ML
+    
     depends_on:
       - postgres
 

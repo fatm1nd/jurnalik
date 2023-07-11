@@ -1,0 +1,6 @@
+langdetect
+pymorphy2
+nltk
+pandas
+scikit-learn
+psycopg2
