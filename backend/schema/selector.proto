@@ -2,17 +2,13 @@ syntax = "proto3";
 
 package selector;
 
-service ML{
-    rpc PingOne(SelectorPing) return (Empty)
-    rpc PingAll(Empty) return (Empty)
+service Selector{
+    rpc SelectOne(User) returns (Empty);
+    rpc SelectAll(Empty) returns (Empty);
 }
 
-message SelectorPing{
+message User{
     string user = 1;
-    enum source{
-        VK = 1;
-        TG = 2;
-    }
 }
 
 message Empty{}

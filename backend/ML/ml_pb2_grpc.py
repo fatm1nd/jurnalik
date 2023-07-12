@@ -5,7 +5,7 @@ import grpc
 import ml_pb2 as ml__pb2
 
 
-class SelectorStub(object):
+class MLStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,58 +14,58 @@ class SelectorStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SelectOne = channel.unary_unary(
-                '/selector.Selector/SelectOne',
-                request_serializer=ml__pb2.User.SerializeToString,
+        self.PingOne = channel.unary_unary(
+                '/selector.ML/PingOne',
+                request_serializer=ml__pb2.SelectorPing.SerializeToString,
                 response_deserializer=ml__pb2.Empty.FromString,
                 )
-        self.SelectAll = channel.unary_unary(
-                '/selector.Selector/SelectAll',
+        self.PingAll = channel.unary_unary(
+                '/selector.ML/PingAll',
                 request_serializer=ml__pb2.Empty.SerializeToString,
                 response_deserializer=ml__pb2.Empty.FromString,
                 )
 
 
-class SelectorServicer(object):
+class MLServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def SelectOne(self, request, context):
+    def PingOne(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SelectAll(self, request, context):
+    def PingAll(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_SelectorServicer_to_server(servicer, server):
+def add_MLServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SelectOne': grpc.unary_unary_rpc_method_handler(
-                    servicer.SelectOne,
-                    request_deserializer=ml__pb2.User.FromString,
+            'PingOne': grpc.unary_unary_rpc_method_handler(
+                    servicer.PingOne,
+                    request_deserializer=ml__pb2.SelectorPing.FromString,
                     response_serializer=ml__pb2.Empty.SerializeToString,
             ),
-            'SelectAll': grpc.unary_unary_rpc_method_handler(
-                    servicer.SelectAll,
+            'PingAll': grpc.unary_unary_rpc_method_handler(
+                    servicer.PingAll,
                     request_deserializer=ml__pb2.Empty.FromString,
                     response_serializer=ml__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'selector.Selector', rpc_method_handlers)
+            'selector.ML', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Selector(object):
+class ML(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SelectOne(request,
+    def PingOne(request,
             target,
             options=(),
             channel_credentials=None,
@@ -75,14 +75,14 @@ class Selector(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/selector.Selector/SelectOne',
-            ml__pb2.User.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/selector.ML/PingOne',
+            ml__pb2.SelectorPing.SerializeToString,
             ml__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SelectAll(request,
+    def PingAll(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,7 +92,7 @@ class Selector(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/selector.Selector/SelectAll',
+        return grpc.experimental.unary_unary(request, target, '/selector.ML/PingAll',
             ml__pb2.Empty.SerializeToString,
             ml__pb2.Empty.FromString,
             options, channel_credentials,

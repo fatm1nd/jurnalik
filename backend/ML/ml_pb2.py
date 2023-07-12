@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x08ml.proto\x12\x08selector\"\x14\n\x04User\x12\x0c\n\x04user\x18\x01 \x01(\t\"\x07\n\x05\x45mpty2g\n\x08Selector\x12,\n\tSelectOne\x12\x0e.selector.User\x1a\x0f.selector.Empty\x12-\n\tSelectAll\x12\x0f.selector.Empty\x1a\x0f.selector.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x08ml.proto\x12\x08selector\"6\n\x0cSelectorPing\x12\x0c\n\x04user\x18\x01 \x01(\t\"\x18\n\x06source\x12\x06\n\x02VK\x10\x00\x12\x06\n\x02TG\x10\x01\"\x07\n\x05\x45mpty2e\n\x02ML\x12\x32\n\x07PingOne\x12\x16.selector.SelectorPing\x1a\x0f.selector.Empty\x12+\n\x07PingAll\x12\x0f.selector.Empty\x1a\x0f.selector.Emptyb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,10 +21,12 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ml_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_USER']._serialized_start=22
-  _globals['_USER']._serialized_end=42
-  _globals['_EMPTY']._serialized_start=44
-  _globals['_EMPTY']._serialized_end=51
-  _globals['_SELECTOR']._serialized_start=53
-  _globals['_SELECTOR']._serialized_end=156
+  _globals['_SELECTORPING']._serialized_start=22
+  _globals['_SELECTORPING']._serialized_end=76
+  _globals['_SELECTORPING_SOURCE']._serialized_start=52
+  _globals['_SELECTORPING_SOURCE']._serialized_end=76
+  _globals['_EMPTY']._serialized_start=78
+  _globals['_EMPTY']._serialized_end=85
+  _globals['_ML']._serialized_start=87
+  _globals['_ML']._serialized_end=188
 # @@protoc_insertion_point(module_scope)
