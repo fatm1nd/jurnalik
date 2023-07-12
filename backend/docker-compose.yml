@@ -3,7 +3,7 @@ version: "3.9"
 
 services:
 
-  postgres:
+  database:
     image: postgres:13.3
     volumes:
     - ./postgresql:/var/lib/postgresql/data
@@ -22,16 +22,25 @@ services:
     ports:
      - 80:80
   
-  telegram_selector:
-    build: selector_services/telegram_selector
-    
-    depends_on:
-      - postgres
-  
   ml_service:
     build: ML
     
     depends_on:
       - postgres
+    command: sh -c 'python3 main.py'
+
+  telegram_selector:
+    build: selector_services/telegram_selector
+    
+    depends_on:
+      - postgres
+
+  vk_selector:
+    build: selector_services/vk_selector
+    
+    depends_on:
+      - postgres
+
+    
 
   

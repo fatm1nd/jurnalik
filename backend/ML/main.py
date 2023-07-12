@@ -12,13 +12,13 @@ import time
 
 class MLServicer(your_proto_grpc.MLServicer):
     def PingOne(self,request, context):
-        user_id = request.user
-        thread = threading.Thread(target=self.process_ping_one, args=(user_id,))
+        thread = threading.Thread(target=self.process_ping_one, args=(request,))
         thread.start()
         return your_proto.Empty()
 
     def process_ping_one(self, user_id):
-        jurnalik_ml.run_one(user_id)
+        print(user_id, flush=True)
+        # jurnalik_ml.run_one(user_id)
         
 
     def PingAll(self, request, context):
@@ -28,11 +28,11 @@ class MLServicer(your_proto_grpc.MLServicer):
     
     def process_ping_all(self):
         # jurnalik_ml.run_all()
-        print("One")
+        print("One", flush=True)
         time.sleep(3)
-        print("Two")
+        print("Two", flush=True)
         time.sleep(3)
-        print("Three")
+        print("Three", flush=True)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor())

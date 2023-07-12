@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  grpc-server:
+    build: .
+    command: sh -c 'python3 main.py'
+  grpc-client:
+    build: client/
+    command: sh -c 'python3 client.py'
+
