@@ -9,10 +9,11 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 from dotenv import dotenv_values
 
+nltk.download('stopwords')
+nltk.download('punkt')
 
 config = dotenv_values(".env")
 
-print(config["HOST"])
 HOST = config["HOST"]
 PORT = config["PORT"]
 USER = config["USER"]

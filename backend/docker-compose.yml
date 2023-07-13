@@ -18,7 +18,7 @@ services:
   client_service:
     build: client/
     depends_on:
-      - postgres
+      - database
     ports:
      - 80:80
   
@@ -26,20 +26,20 @@ services:
     build: ML
     
     depends_on:
-      - postgres
+      - database
     command: sh -c 'python3 main.py'
 
   telegram_selector:
     build: selector_services/telegram_selector
     
     depends_on:
-      - postgres
+      - database
 
   vk_selector:
     build: selector_services/vk_selector
     
     depends_on:
-      - postgres
+      - database
 
     
 
