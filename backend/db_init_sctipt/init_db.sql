@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS full_users_ids (
 );
 
 CREATE TABLE IF NOT EXISTS raw_posts(
-    post_id INT,
+    post_id VARCHAR,
     user_id INT,
     group_id BIGINT,
     PRIMARY KEY (post_id, user_id)
