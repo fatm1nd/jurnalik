@@ -8,6 +8,8 @@ import nltk
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 from dotenv import dotenv_values
+nltk.download('stopwords')
+nltk.download('punkt')
 
 nltk.download('stopwords')
 nltk.download('punkt')
