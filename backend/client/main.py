@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-import client_db
 import time
 '''
 - /user/new → int:id 
@@ -76,8 +75,7 @@ def getPosts(user_id):
 
 @app.route('/user/<int:user_id>/groups')
 def getGroups(user_id):
-    groups = ["8217389712839":{"group_name":"Офигенная группа из ТГ","picture":"https://cdn4.telegram-cdn.org/file/mmbNmK_bHW_sqT4aFR5pC_BUftg4IdrVrAR9AvyGmulpkHyVtkeeYuuI4Mj7wKUl27sqmxE2-wORX6RLq_zP3UhTMk3AVjlw1cV5k3EOwPD9jLwgV0FKFrXUU-J19CGpumi-p38VD442ZKouJzxfRViNRze7um61fvs6fmFBlJfv9t0kajuBdMobPokAo1cLPGwqStAj8T33QVzfevVSZlNacO4r14Rxvg8maGC0CeJsaYlAgPFcr7ogK5PgD7YguHbIAYsIDDUkx9k9-2ONNiEx87TTUwj0b8tF6933JI1tnVtbvlx0zJ0WJuh3LeYVaQYhVk-Hp3CboK4ZlISbuA.jpg","source":"Telegram"},\
-              "3129837123987":{"group_name":"Невероятная группа из VK","picture":"https://yandex.ru/images/search?text=обезьяна+улыбается+картинка&img_url=https%3A%2F%2Fkrot.info%2Fuploads%2Fposts%2F2022-03%2F1646146774_35-krot-info-p-smeshnaya-ulibka-smeshnie-foto-38.jpg&pos=1&rpt=simage&stype=image&lr=121642&parent-reqid=1689281633196850-3016692286679148818-balancer-l7leveler-kubr-yp-vla-89-BAL-357&source=serp","source":"VK"}]
+    groups = [{"8217389712839":{"group_name":"Офигенная группа из ТГ","picture":"https://cdn4.telegram-cdn.org/file/mmbNmK_bHW_sqT4aFR5pC_BUftg4IdrVrAR9AvyGmulpkHyVtkeeYuuI4Mj7wKUl27sqmxE2-wORX6RLq_zP3UhTMk3AVjlw1cV5k3EOwPD9jLwgV0FKFrXUU-J19CGpumi-p38VD442ZKouJzxfRViNRze7um61fvs6fmFBlJfv9t0kajuBdMobPokAo1cLPGwqStAj8T33QVzfevVSZlNacO4r14Rxvg8maGC0CeJsaYlAgPFcr7ogK5PgD7YguHbIAYsIDDUkx9k9-2ONNiEx87TTUwj0b8tF6933JI1tnVtbvlx0zJ0WJuh3LeYVaQYhVk-Hp3CboK4ZlISbuA.jpg","source":"Telegram"}, "3129837123987":{"group_name":"Невероятная группа из VK","picture":"https://yandex.ru/images/search?text=обезьяна+улыбается+картинка&img_url=https%3A%2F%2Fkrot.info%2Fuploads%2Fposts%2F2022-03%2F1646146774_35-krot-info-p-smeshnaya-ulibka-smeshnie-foto-38.jpg&pos=1&rpt=simage&stype=image&lr=121642&parent-reqid=1689281633196850-3016692286679148818-balancer-l7leveler-kubr-yp-vla-89-BAL-357&source=serp","source":"VK"}}]
     return jsonify(groups)
 
 @app.route('/user/<int:user_id>/VK')
