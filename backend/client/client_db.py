@@ -9,7 +9,7 @@ PORT = config["POSTGRES_PORT"]
 USER = config["POSTGRES_USER"]
 PASSWORD = config["POSTGRES_PASSWORD"]
 DATABASE = config["POSTGRES_DATABASE"]
-HOST = "localhost"
+# HOST = "localhost"
 # con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
 # cur = con.cursor()
 # data = {'user_id': [], 'post_id': [], 'text': []}
@@ -64,6 +64,6 @@ class DataBase():
         groupsq = cur.fecthall()
 
 
-db = DataBase()
+# db = DataBase()
 
-print(db.getPostsByUserId(207))
+# print(db.getPostsByUserId(207))
