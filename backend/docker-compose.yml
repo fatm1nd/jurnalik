@@ -21,6 +21,9 @@ services:
       - database
     ports:
      - 80:80
+     - 5000:5000
+    command: sh -c 'python3 main.py'
+
   
   ml_service:
     build: ML
@@ -29,17 +32,17 @@ services:
       - database
     command: sh -c 'python3 main.py'
 
-  telegram_selector:
-    build: selector_services/telegram_selector
+  # telegram_selector:
+  #   build: selector_services/telegram_selector
     
-    depends_on:
-      - database
+  #   depends_on:
+  #     - database
 
-  vk_selector:
-    build: selector_services/vk_selector
+  # vk_selector:
+  #   build: selector_services/vk_selector
     
-    depends_on:
-      - database
+  #   depends_on:
+  #     - database
 
     
 
