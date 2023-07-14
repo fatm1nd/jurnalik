@@ -65,11 +65,6 @@ def handle_forwarded_message(message):
     markup.add(InlineKeyboardButton("Удалить канал", callback_data="delete_channel"))
     markup.add(InlineKeyboardButton("Завершить", callback_data="end_with_channels"))
 
-    # print(message.forward_from_chat.type)
-    # if message.forward_from_chat.type == 'private':
-    #     bot.send_message(message.chat.id, "Извините, разрешены только открытые каналы.")
-    #     return
-
     try:
         chat = bot.get_chat(message.forward_from_chat.id)
     except Exception:
@@ -83,9 +78,18 @@ def handle_forwarded_message(message):
     else:
         photo_url = ""
 
+    channel_id = message.forward_from_chat.id
+    existing_channels = [channel["id"] for channel in channels[message.chat.id]]
+    print(existing_channels)
+    if channel_id in existing_channels:
+        return
+
     channels[message.chat.id].append(
-        {"id": message.forward_from_chat.id, "title": message.forward_from_chat.title, "photo": photo_url})
+        {"id": message.forward_from_chat.id, "username": message.forward_from_chat.username,
+         "title": message.forward_from_chat.title, "photo": photo_url})
+
     bot.send_message(message.chat.id, f'Канал "{message.forward_from_chat.title}" успешно добавлен!')
+
     all_channels = [x["title"] for x in channels[message.chat.id]]
     bot.send_message(message.chat.id, "Ваши каналы:\n" + '\n'.join(all_channels), reply_markup=markup)
 
