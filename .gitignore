@@ -6,3 +6,5 @@ backend/ML/__pycache__/*
 backend/ML/main.py
 backend/ML/__pycache__/jurnalik_ml.cpython-310.pyc
 backend/client/.env
+backend/selector_services/telegram_selector/config.ini
+backend/selector_services/telegram_selector/.env

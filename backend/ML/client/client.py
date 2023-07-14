@@ -23,11 +23,6 @@ def run_grpc_client():
 
     time.sleep(7)
 
-    response = stub.PingOne(selector_ping)
-    print("SelectOne response:", response, flush=True)
-
-    # time.sleep(2)
-
     # response = stub.PingOne(selector_ping)
     # print("SelectOne response:", response, flush=True)
 
@@ -41,10 +36,15 @@ def run_grpc_client():
     # response = stub.PingOne(selector_ping)
     # print("SelectOne response:", response, flush=True)
 
-    # # Call the SelectAll RPC
-    # empty_request = your_proto.Empty()
-    # response = stub.PingAll(empty_request)
-    # print("SelectAll response:", response)
+    # time.sleep(2)
+
+    # response = stub.PingOne(selector_ping)
+    # print("SelectOne response:", response, flush=True)
+
+    # Call the SelectAll RPC
+    empty_request = your_proto.Empty()
+    response = stub.PingAll(empty_request)
+    print("SelectAll response:", response)
 
     # empty_request = your_proto.Empty()
     # response = stub.PingAll(empty_request)

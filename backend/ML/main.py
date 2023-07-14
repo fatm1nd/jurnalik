@@ -61,7 +61,7 @@ class MLServicer(your_proto_grpc.MLServicer):
             # RUNNING ML MODULE
             jurnalik_ml.run_one((user_id,))
             # END OF RUNNING
-            print(f"{user_id}:End copywriting for {user_id}")
+            print(f"{user_id}:End copywriting for {user_id}", flush=True)
             USERS_COUNTERS[user_id] = 0
         else:
             USERS_COUNTERS[user_id] += 1
@@ -85,8 +85,12 @@ class MLServicer(your_proto_grpc.MLServicer):
         global GLOBAL_COUNTER
         GLOBAL_COUNTER += 1
         if GLOBAL_COUNTER == AMOUNT_OF_SOURCES:
-            # jurnalik_ml.run_all()
+            print("Start copywriting for all", flush=True)
+            jurnalik_ml.run_all()
+            print("Stop copywriting for all", flush=True)
             GLOBAL_COUNTER = 0
+        else:
+            print(f"Not enough sources {GLOBAL_COUNTER} of {AMOUNT_OF_SOURCES}",print=True)
         
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor())

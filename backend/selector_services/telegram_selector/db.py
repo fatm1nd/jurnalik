@@ -3,6 +3,16 @@ import logging
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
+
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
+HOST = config["POSTGRES_HOST"]
+PORT = config["POSTGRES_PORT"]
+USER = config["POSTGRES_USER"]
+PASSWORD = config["POSTGRES_PASSWORD"]
+DATABASE = config["POSTGRES_DATABASE"]
+
 try:
     conn = psycopg2.connect(database="jurnalik", user="postgres", password="1710", host="127.0.0.1", port="5432")
 except:

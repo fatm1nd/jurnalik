@@ -1,0 +1,7 @@
+psycopg2
+python-dotenv
+telethon
+telebot
+lxml
+requests
+bs4
