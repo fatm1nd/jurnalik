@@ -8,24 +8,38 @@ import com.company.utils.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DBController {
-    public DBController(AppInfo appInfo){}
+
+    private ConnectionUtil db = new ConnectionUtil();
+    private Connection con = db.connect_to_db("jurnalik", "postgres", "54pCu8S6Pk");;
+    public DBController(AppInfo appInfo) {
+    }
+
+    public DBController() {
+
+    }
+
     public List<UserInfo> getAllUsersVKBody() throws SQLException {
-        ConnectionUtil db = new ConnectionUtil();
-        Connection con = db.connect_to_db("Jornalik", "postgres", "Di~S8Qgs~%");
         return db.selectAllUserInfo(con, "vk_table");
     }
 
+    public UserInfo getOneUsersVKBody(int user_id) throws SQLException {
+        return db.selectOneUserInfo(con, "vk_table", user_id);
+    }
 
-    public void putPost(UserInfo user, RawPost post, Connection con, ConnectionUtil db) {
+
+    public void putPost(UserInfo user, RawPost post) {
         db.insert_row_into_raw_posts(con, "raw_posts", user, post);
     }
 
 
-    public void putItem(int postId, RawItem item, Connection con, ConnectionUtil db) {
-        db.insert_row_into_raw_items(con, "raw_items", postId, item);
+    public void putItem(int postId, RawItem item) {
+        db.insert_row_into_items(con, "items", postId, item);
+    }
+
+    public void putGroup(int group_id, String group_name, String picture, String sourse){
+        db.insert_row_into_groups_and_channels(group_id, group_name, picture, sourse, con);
     }
 }
