@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:13.3
+    volumes:
+    - ../postgresql:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "${DATABASE}"
+      POSTGRES_USER: "${USER}"
+      POSTGRES_PASSWORD: "${PASSWORD}"
+  grpc-server:
+    build: .
+    command: sh -c 'python3 main.py'
+  grpc-client:
+    build: client/
+    command: sh -c 'python3 client.py'
+

@@ -1,0 +1,6 @@
+flask
+psycopg2
+python-dotenv
+grpcio 
+grpcio-tools 
+googleapis-common-protos

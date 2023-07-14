@@ -1,14 +1,9 @@
 version: "3.9"
 
-# networks:
-#   default:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 10.0.0.0/24
 
 services:
-  postgres:
+
+  database:
     image: postgres:13.3
     volumes:
     - ./postgresql:/var/lib/postgresql/data
@@ -22,16 +17,33 @@ services:
 
   client_service:
     build: client/
-
-
     depends_on:
-      - postgres
+      - database
+    ports:
+     - 80:80
+     - 5000:5000
+    command: sh -c 'python3 main.py'
+
   
-  telegram_selector:
-    build: selector_services/telegram_selector
+  ml_service:
+    build: ML
     
-
     depends_on:
-      - postgres
+      - database
+    command: sh -c 'python3 main.py'
+
+  # telegram_selector:
+  #   build: selector_services/telegram_selector
+    
+  #   depends_on:
+  #     - database
+
+  # vk_selector:
+  #   build: selector_services/vk_selector
+    
+  #   depends_on:
+  #     - database
+
+    
 
   

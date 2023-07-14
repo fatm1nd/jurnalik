@@ -41,5 +41,5 @@ CREATE TABLE IF NOT EXISTS telegram_channels(
 
 CREATE TABLE IF NOT EXISTS vk_table(
     vk_id INT PRIMARY KEY,
-    vk_token VARCHAR
+    vk_token VARCHAR 
 );
