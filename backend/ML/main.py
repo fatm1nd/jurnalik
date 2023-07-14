@@ -17,13 +17,14 @@ USERS_COUNTERS = {}
 
 config = dotenv_values(".env")
 
-print(f"ML Module is ready. DB is on {config['HOST']}",flush=True)
+print(f"ML Module is ready. DB is on {config['POSTGRES_HOST']}",flush=True)
 
-HOST = config["HOST"]
-PORT = config["PORT"]
-USER = config["USER"]
-PASSWORD = config["PASSWORD"]
-DATABASE = config["DATABASE"]
+HOST = config["POSTGRES_HOST"]
+PORT = config["POSTGRES_PORT"]
+USER = config["POSTGRES_USER"]
+PASSWORD = config["POSTGRES_PASSWORD"]
+DATABASE = config["POSTGRES_DATABASE"]
+# print(config, flush=True)
 
 class MLServicer(your_proto_grpc.MLServicer):
     def PingOne(self,request, context):

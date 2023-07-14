@@ -5,3 +5,4 @@ backend/ML/__pycache__
 backend/ML/__pycache__/*
 backend/ML/main.py
 backend/ML/__pycache__/jurnalik_ml.cpython-310.pyc
+backend/client/.env

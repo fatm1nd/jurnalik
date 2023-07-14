@@ -1,6 +1,6 @@
 import pandas as pd
 from langdetect import detect
-import pymorphy2
+import pymorphy3
 import pickle
 import psycopg2
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -8,19 +8,18 @@ import nltk
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import PorterStemmer
 from dotenv import dotenv_values
-nltk.download('stopwords')
-nltk.download('punkt')
 
 nltk.download('stopwords')
-nltk.download('punkt')
+# nltk.download('punkt')
+# from nltk.corpus import stopwords
 
 config = dotenv_values(".env")
 
-HOST = config["HOST"]
-PORT = config["PORT"]
-USER = config["USER"]
-PASSWORD = config["PASSWORD"]
-DATABASE = config["DATABASE"]
+HOST = config["POSTGRES_HOST"]
+PORT = config["POSTGRES_PORT"]
+USER = config["POSTGRES_USER"]
+PASSWORD = config["POSTGRES_PASSWORD"]
+DATABASE = config["POSTGRES_DATABASE"]
 
 
 def tokenizer_data(data):
@@ -29,6 +28,7 @@ def tokenizer_data(data):
 
 
 def stop_words_clean(text):
+    print(text,flush=True)
     language = detect(" ".join(text))
 
     if language == 'en':
@@ -40,13 +40,14 @@ def stop_words_clean(text):
 
 
 def normalize_tokens(text):
+    print(text,flush=True)
     language = detect(" ".join(text))
 
     if language == 'en':
         stemmer = PorterStemmer()
         return [stemmer.stem(y) for y in text]
 
-    morph = pymorphy2.MorphAnalyzer()
+    morph = pymorphy3.MorphAnalyzer()
     return [morph.parse(tok)[0].normal_form for tok in text]
 
 
@@ -54,9 +55,10 @@ def preprocessing(data):
     data['text_lower'] = data['text'].apply(lambda x: x.lower())
     data['text_clean'] = tokenizer_data(data)
     data = data.drop(['text_lower'], axis=1)
-
     for i in range(len(data['text_clean'])):
-        data['text_clean'][i] = stop_words_clean(data['text_clean'][i])
+        buffer = stop_words_clean(data['text_clean'][i])
+        if len(buffer) != 0:
+            data['text_clean'][i] = buffer
         data['text_clean'][i] = normalize_tokens(data['text_clean'][i])
 
     data['text_clean'] = data['text_clean'].apply(lambda x: " ".join(x).lower())
@@ -152,12 +154,14 @@ def push(data, user_id):
 
     arr_remove = remove_duplicates(data['text_clean'])
 
-    cur.execute("SELECT * FROM raw_posts WHERE user_id=%s", (user_id))
+    cur.execute("SELECT * FROM raw_posts WHERE user_id=%s ;", (int(user_id),))
     insert_data = cur.fetchall()
 
     for j in range(len(insert_data)):
+        if not j in data['category'].columns:
+            data['category'][j] = "entertainment"
         if data['category'][j] != 'spam' and j not in arr_remove:
-            cur.execute("INSERT INTO prepared_posts(post_id, user_id, group_id, category) VALUES (%s, %s, %s, %s);",
+            cur.execute("INSERT INTO prepared_posts (post_id, user_id, group_id, category) VALUES (%s, %s, %s, %s);",
                         (insert_data[j][0], insert_data[j][1], insert_data[j][2], data['category'][j]))
     con.commit()
 
