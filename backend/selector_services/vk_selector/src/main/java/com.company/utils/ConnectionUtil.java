@@ -18,7 +18,7 @@ public class ConnectionUtil {
         props.setProperty("user", user);
         props.setProperty("password", pass);
         try {
-            Class.forName("org.postgresql.Driver");
+//            Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, props);
             if (conn != null) {
                 System.out.println("Connection Established");
@@ -89,10 +89,10 @@ public class ConnectionUtil {
         return userInfoList;
     }
 
-    public UserInfo selectOneUserInfo(Connection conn, String table_name, int user_id) throws SQLException {
+    public UserInfo selectOneUserInfo(Connection conn, String table_name, int user_id) {
         Statement statement;
         try {
-            String query = "SELECT * FROM " + table_name + " JOIN FULL_USER_IDS ON VK_TABLE.vk_id = FULL_USER_IDS.vk_id WHERE user_id = " + user_id +  " ;";
+            String query = "SELECT * FROM " + table_name + " JOIN full_users_ids ON VK_TABLE.vk_id = full_users_ids.vk_id WHERE user_id = " + user_id +  " ;";
             statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(query);

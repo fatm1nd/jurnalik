@@ -32,8 +32,10 @@ public class VKClient {
 
 
             } catch (IOException e) {
+                System.out.println("some_broken get all group");
                 e.printStackTrace();
             } catch (InterruptedException e) {
+                System.out.println("some_broken get all group");
                 throw new RuntimeException(e);
             }
         }
@@ -104,8 +106,10 @@ public class VKClient {
 
 
             } catch (IOException e) {
+                System.out.println("some_broken get all group");
                 e.printStackTrace();
             } catch (InterruptedException e) {
+                System.out.println("some_broken get all group");
                 throw new RuntimeException(e);
             }
         }
@@ -114,7 +118,12 @@ public class VKClient {
 
     public HashMap<String, String> allGroupsValueToName(UserInfo vkUser, DBController dbController) {
         HashMap<String, String> allGroups = new HashMap<>();
+        int cnt = 0;
             try {
+                if (cnt % 5 == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                ++cnt;
                 String urlStr = "https://api.vk.com/method/groups.get?user_ids=" + vkUser.getVkId() + "&fields=bdate&v=5.131&access_token=" + vkUser.getToken();
                 URL url = new URL(urlStr);
 
@@ -137,14 +146,21 @@ public class VKClient {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         return allGroups;
     }
 
     private HashMap<String, String> IdToShortNameMap(HashSet<Map.Entry<String, String>> ids, DBController dbController) {
         HashMap<String, String> allNames = new HashMap<>();
+        int cnt = 0;
         for (Map.Entry<String, String> id : ids) {
             try {
+                if (cnt % 5 == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                ++cnt;
                 String urlStr = "https://api.vk.com/method/groups.getById?group_id=" + id.getKey() + "&v=5.131&access_token=" + id.getValue();
                 URL url = new URL(urlStr);
 
@@ -165,6 +181,8 @@ public class VKClient {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
         return allNames;
@@ -173,8 +191,13 @@ public class VKClient {
 
     public HashSet<Map.Entry<String, String>> shortNamesWithTokens(HashSet<Map.Entry<String, String>> ids) {
         HashSet<Map.Entry<String, String>> allNames = new HashSet<>();
+        int cnt = 0;
         for (Map.Entry<String, String> id : ids) {
             try {
+                if (cnt % 5 == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                ++cnt;
                 String urlStr = "https://api.vk.com/method/groups.getById?group_id=" + id.getKey() + "&v=5.131&access_token=" + id.getValue();
                 URL url = new URL(urlStr);
 
@@ -195,6 +218,8 @@ public class VKClient {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
         return allNames;

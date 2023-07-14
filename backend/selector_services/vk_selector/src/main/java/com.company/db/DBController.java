@@ -12,9 +12,11 @@ import java.util.List;
 
 public class DBController {
 
-    private ConnectionUtil db = new ConnectionUtil();
-    private Connection con = db.connect_to_db("jurnalik", "postgres", "54pCu8S6Pk");;
+    private ConnectionUtil db = null;
+    private Connection con = null;
     public DBController(AppInfo appInfo) {
+        this.db = new ConnectionUtil();
+        this.con = db.connect_to_db("jurnalik", "postgres", "");
     }
 
     public DBController() {
