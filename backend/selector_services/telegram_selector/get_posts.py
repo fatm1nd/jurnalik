@@ -66,12 +66,9 @@ async def main(client, phone, user_input_channel):
 
     me = await client.get_me()
 
-    if user_input_channel.isdigit():
-        entity = PeerChannel(int(user_input_channel))
-    else:
-        entity = user_input_channel
+    entity = "https://t.me/" + user_input_channel
 
-    channel = await client.get_entity(entity)
+    channel = await client.get_entity(user_input_channel)
 
     offset_id = 0
     limit = 100
@@ -100,7 +97,7 @@ async def main(client, phone, user_input_channel):
     return channel_posts
 
 
-def collect_posts(channel_id):
+def collect_posts(channel_username):
     config = configparser.ConfigParser()
     config.read("config.ini")
 
@@ -116,7 +113,7 @@ def collect_posts(channel_id):
     client = TelegramClient(phone, api_id, api_hash)
 
     with client:
-        posts = client.loop.run_until_complete(main(client, phone, channel_id))
+        posts = client.loop.run_until_complete(main(client, phone, channel_username))
         return posts
 
 # posts = collect_posts("https://t.me/StrayKids_JYP")
