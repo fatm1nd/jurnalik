@@ -40,7 +40,8 @@ def save_channels(id, channels):
             add_channel = f"INSERT INTO groups_and_channels(group_id, group_name, picture, source) VALUES ({channel_id}, '{channel_name}', '{channel_picture}', 'tg')"
             cursor.execute(add_channel)
             conn.commit()
-        add_channel = f"INSERT INTO telegram_channels(group_id, user_id) VALUES ({channel_id}, {user_id})"
+        channel_username = channel["username"]
+        add_channel = f"INSERT INTO telegram_channels(group_id, username, user_id) VALUES ({channel_id}, '{channel_username}', {user_id})"
         cursor.execute(add_channel)
         conn.commit()
 
@@ -57,18 +58,22 @@ def get_ids():
 
 
 def get_channels(user_id):
-    get_query = f"SELECT group_id FROM telegram_channels WHERE user_id = {'user_id'}"
+    get_query = f"SELECT username FROM telegram_channels WHERE user_id = {'user_id'}"
     cursor.execute(get_query)
     channels = cursor.fetchall()
     user_channels = []
     for channel in channels:
-        channel_id = str(channel[0])
-        user_channels.append(channel_id)
+        username = str(channel[0])
+        user_channels.append(username)
     return user_channels
 
 
-def write_posts(user_id, channel_id, posts):
+def write_posts(user_id, channel_username, posts):
     for key, value in posts.items():
+        channel_id_query = f"SELECT group_id from telegram_channels WHERE username='{channel_username}'"
+        cursor.execute(channel_id_query)
+        channel_id = cursor.fetchone()
+        channel_id = channel_id[0]
         post_id = f"{str(channel_id)}_{str(key)}"
         write_query = f"INSERT INTO raw_posts(post_id, user_id, group_id) VALUES ('{post_id}', {user_id}, {channel_id})"
         cursor.execute(write_query)
