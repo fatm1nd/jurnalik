@@ -1,5 +1,6 @@
 import psycopg2
 import logging
+import telegram_module
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
@@ -54,6 +55,7 @@ def save_channels(id, channels):
         add_channel = f"INSERT INTO telegram_channels(group_id, username, user_id) VALUES ({channel_id}, '{channel_username}', {user_id})"
         cursor.execute(add_channel)
         conn.commit()
+    telegram_module.handle_one(user_id)
 
 
 def get_ids():
