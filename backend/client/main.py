@@ -35,7 +35,7 @@ def index():
 
 @app.route('/user/new')
 def newUser():
-    return 4207
+    return jsonify(4207)
 
 @app.route('/user/<int:user_id>/sources')
 def getSources(user_id):
