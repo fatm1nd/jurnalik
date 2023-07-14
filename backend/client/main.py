@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+import client_db
+import time
 '''
 - /user/new → int:id 
 Создает нового пользователя в базе и возвращает его id
@@ -16,6 +18,12 @@ from flask import Flask, jsonify, request
 Метод нужен для авторизации в сервисе через Вконтакте
 
 '''
+
+time.sleep(5)
+
+print(f"Client Module is ready",flush=True)
+# db = client_db.DataBase()
+# print(db.addUser(),flush=True)
 
 
 app = Flask(__name__)
@@ -37,7 +45,7 @@ def getSources(user_id):
     1 - VK
     2 - Inst
     '''
-    return jsonify(int(user_id) % 3)
+    return jsonify(['Telegram','VK'])
 
 @app.route('/user/<int:user_id>/work/ping')
 def pingJurnalik(user_id):
@@ -80,4 +88,4 @@ def vkAuth(user_id):
     return f"Авторизация прошла успешно для пользователя {user_id}"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=5000,debug=True)
