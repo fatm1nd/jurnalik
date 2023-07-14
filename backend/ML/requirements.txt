@@ -1,5 +1,5 @@
 langdetect
-pymorphy2
+pymorphy3
 nltk
 pandas
 scikit-learn

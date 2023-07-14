@@ -6,9 +6,11 @@ services:
     volumes:
     - ../postgresql:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: "${DATABASE}"
-      POSTGRES_USER: "${USER}"
-      POSTGRES_PASSWORD: "${PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DATABASE}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+     - 5432:5432
   grpc-server:
     build: .
     command: sh -c 'python3 main.py'
