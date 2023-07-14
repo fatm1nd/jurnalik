@@ -1,5 +1,5 @@
 import configparser
-import asyncio
+
 from datetime import date, datetime, timedelta
 import threading
 
@@ -11,6 +11,8 @@ from telethon.tl.types import (
 )
 import MediaParser
 
+from asyncio import set_event_loop, new_event_loop
+import asyncio
 
 async def login(client, phone):
     if await client.is_user_authorized() == False:
@@ -82,6 +84,7 @@ async def main(client, phone, user_input_channel):
     for message in messages:
         tasks.append(threading.Thread(target=process_message, args=(channel, yesterday, message, all_messages)))
         tasks[-1].start()
+        # process_message(channel,yesterday,message, all_messages)
 
     for task in tasks:
         task.join()
@@ -110,12 +113,22 @@ def collect_posts(channel_username):
     phone = config['Telegram']['phone']
     username = config['Telegram']['username']
 
-    client = TelegramClient(phone, api_id, api_hash)
+    # print(*config, flush=True)
 
+    set_event_loop(new_event_loop())
+    client = TelegramClient(phone, api_id, api_hash)
+    
     with client:
         posts = client.loop.run_until_complete(main(client, phone, channel_username))
         return posts
+    
+
+# config = configparser.ConfigParser()
+# config.read("config.ini")
+# print(config['Telegram']['username'])
+
 
 # posts = collect_posts("https://t.me/StrayKids_JYP")
 # for key, value in posts.items():
 #     print(f"{key} : {value}")
+

@@ -1,6 +1,6 @@
 import psycopg2
 import logging
-import telegram_module
+# import telegram_module
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
@@ -14,8 +14,10 @@ USER = config["POSTGRES_USER"]
 PASSWORD = config["POSTGRES_PASSWORD"]
 DATABASE = config["POSTGRES_DATABASE"]
 
+
+
 try:
-    conn = psycopg2.connect(database="jurnalik", user="postgres", password="1710", host="127.0.0.1", port="5432")
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
 except:
     print('Can`t establish connection to database')
     exit()
@@ -55,7 +57,7 @@ def save_channels(id, channels):
         add_channel = f"INSERT INTO telegram_channels(group_id, username, user_id) VALUES ({channel_id}, '{channel_username}', {user_id})"
         cursor.execute(add_channel)
         conn.commit()
-    telegram_module.handle_one(user_id)
+    # telegram_module.handle_one(user_id)
 
 
 def get_ids():

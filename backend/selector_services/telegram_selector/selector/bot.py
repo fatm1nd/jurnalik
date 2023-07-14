@@ -6,7 +6,9 @@ from telebot.handler_backends import State, StatesGroup
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton, \
     ReplyKeyboardRemove
 from telebot.storage import StateMemoryStorage
-
+import grpc
+import selector_pb2 as your_proto
+import selector_pb2_grpc as your_proto_grpc
 import db
 
 config = configparser.ConfigParser()
@@ -20,6 +22,7 @@ bot = telebot.TeleBot(config['Telegram']['token'], state_storage=state_storage)
 
 channels = dict()
 
+USERS_IDS = dict()
 
 class BotStates(StatesGroup):
     authentication = State()
@@ -27,6 +30,23 @@ class BotStates(StatesGroup):
     delete_channel = State()
     stay = State()
     edit = State()
+
+
+# def pingSelector(user_id):
+#     # channel = grpc.insecure_channel(f'{"telegram_selector"}:{"50051"}')
+#     channel = grpc.insecure_channel(f'{"telegram_selector"}:{"50051"}')
+#     stub = your_proto_grpc.SelectorStub(channel)
+#     # Call the SelectOne RPC
+#     # Create an instance of SelectorPing
+#     selector_ping = your_proto.User()
+
+#     # Set the user field
+#     selector_ping.user = str(user_id)
+
+#     # Call the SelectAll RPC
+#     response = stub.SelectOne(selector_ping)
+#     print("SelectAll response:", response)
+
 
 
 @bot.message_handler(commands=['start'])
@@ -40,6 +60,9 @@ def start_ex(message):
 @bot.message_handler(state=BotStates.authentication, func=lambda message: True)
 def start_ex(message):
     code = message.text
+
+    USERS_IDS[message.chat.id] = code
+
     try:
         code = int(code)
     except Exception:
@@ -154,6 +177,8 @@ def callback_query(call):
 
         channels[call.message.chat.id].clear()
         bot.set_state(call.message.chat.id, BotStates.stay, call.message.chat.id)
+
+        # pingSelector(USERS_IDS[call.message.chat.id])
 
     if call.data == "delete_channel":
         if not channels[call.message.chat.id]:
