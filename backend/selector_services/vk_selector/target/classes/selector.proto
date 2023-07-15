@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package selector;
+
+service Selector{
+    rpc SelectOne(User) returns (Empty);
+    rpc SelectAll(Empty) returns (Empty);
+}
+
+message User{
+    string user = 1;
+}
+
+message Empty{}
