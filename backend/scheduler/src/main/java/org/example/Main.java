@@ -35,7 +35,7 @@ public class Main {
 
                 stub = SelectorGrpc.newBlockingStub(channel);
 
-                SelectorOuterClass.Empty helloResponse = stub.selectAll(SelectorOuterClass.Empty.newBuilder()
+                helloResponse = stub.selectAll(SelectorOuterClass.Empty.newBuilder()
                         .build());
 
                 channel.shutdown();

@@ -7,6 +7,6 @@ RUN mvn -f /home/app/pom.xml clean install package install package
 # Package stage
 #
 FROM openjdk:18-slim
-EXPOSE 8080
-ADD /target/demo.jar demo.jar
+EXPOSE 40000
+ADD /target/vk_selector-1.0-SNAPSHOT.jar demo.jar
 ENTRYPOINT ["java","-jar","demo.jar"]

@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         Server server = ServerBuilder
-                .forPort(30004)
+                .forPort(40000)
                 .addService((BindableService) new SelectorImpl()).build();
 
         server.start();
