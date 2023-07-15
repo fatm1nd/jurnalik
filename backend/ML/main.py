@@ -2,6 +2,8 @@ import jurnalik_ml
 import grpc
 import ml_pb2_grpc as your_proto_grpc
 import ml_pb2 as your_proto
+import selector_pb2_grpc as selector_grpc
+import selector_pb2 as selector_proto
 from concurrent import futures
 import threading 
 import time
@@ -30,7 +32,7 @@ class MLServicer(your_proto_grpc.MLServicer):
     def PingOne(self,request, context):
         thread = threading.Thread(target=self.process_ping_one, args=(request,))
         thread.start()
-        return your_proto.Empty()
+        return selector_proto.Empty()
 
     def getAuthesOfUser(self,user_id):
         con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
@@ -61,7 +63,7 @@ class MLServicer(your_proto_grpc.MLServicer):
             # RUNNING ML MODULE
             jurnalik_ml.run_one((user_id,))
             # END OF RUNNING
-            print(f"{user_id}:End copywriting for {user_id}")
+            print(f"{user_id}:End copywriting for {user_id}", flush=True)
             USERS_COUNTERS[user_id] = 0
         else:
             USERS_COUNTERS[user_id] += 1
@@ -78,15 +80,19 @@ class MLServicer(your_proto_grpc.MLServicer):
     def PingAll(self, request, context):
         thread = threading.Thread(target=self.process_ping_all)
         thread.start()
-        return your_proto.Empty()
+        return selector_proto.Empty()
     
     def process_ping_all(self):
         # jurnalik_ml.run_all()
         global GLOBAL_COUNTER
         GLOBAL_COUNTER += 1
         if GLOBAL_COUNTER == AMOUNT_OF_SOURCES:
-            # jurnalik_ml.run_all()
+            print("Start copywriting for all", flush=True)
+            jurnalik_ml.run_all()
+            print("Stop copywriting for all", flush=True)
             GLOBAL_COUNTER = 0
+        else:
+            print(f"Not enough sources {GLOBAL_COUNTER} of {AMOUNT_OF_SOURCES}",flush=True)
         
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor())

@@ -2,9 +2,11 @@ syntax = "proto3";
 
 package selector;
 
+import "selector.proto";
+
 service ML{
-    rpc PingOne(SelectorPing) returns (Empty);
-    rpc PingAll(Empty) returns (Empty);
+    rpc PingOne(SelectorPing) returns (selector.Empty);
+    rpc PingAll(selector.Empty) returns (selector.Empty);
 }
 
 message SelectorPing{
@@ -15,5 +17,3 @@ message SelectorPing{
     }
     Source source = 2;
 }
-
-message Empty{}

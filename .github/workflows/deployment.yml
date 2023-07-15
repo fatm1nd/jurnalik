@@ -1,7 +1,7 @@
 name: Deployment to Host
 
 on:
-  push:
+  pull_request:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]

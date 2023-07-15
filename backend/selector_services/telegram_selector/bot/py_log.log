@@ -1,0 +1,37 @@
+ERROR:TeleBot:Infinity polling exception: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: There is no current event loop in thread 'ThreadPoolExecutor-0_0'."
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"Exception calling application: There is no current event loop in thread \'ThreadPoolExecutor-0_0\'.", grpc_status:2, created_time:"2023-07-14T22:34:31.605933235+03:00"}"
+>
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/util.py", line 148, in raise_exceptions
+    raise self.exception_info
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/util.py", line 91, in run
+    task(*args, **kwargs)
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/telebot/__init__.py", line 6428, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "/home/fatm1nd/Documents/Innopolis/jurnalik/backend/selector_services/telegram_selector/bot/bot.py", line 181, in callback_query
+    pingSelector(USERS_IDS[call.message.chat.id])
+  File "/home/fatm1nd/Documents/Innopolis/jurnalik/backend/selector_services/telegram_selector/bot/bot.py", line 47, in pingSelector
+    response = stub.SelectOne(selector_ping)
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/grpc/_channel.py", line 1030, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/home/fatm1nd/.local/lib/python3.10/site-packages/grpc/_channel.py", line 910, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: There is no current event loop in thread 'ThreadPoolExecutor-0_0'."
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"Exception calling application: There is no current event loop in thread \'ThreadPoolExecutor-0_0\'.", grpc_status:2, created_time:"2023-07-14T22:34:31.605933235+03:00"}"
+>
+
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling

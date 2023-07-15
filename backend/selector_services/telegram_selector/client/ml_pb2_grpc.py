@@ -3,7 +3,6 @@
 import grpc
 
 import ml_pb2 as ml__pb2
-import selector_pb2 as selector__pb2
 
 
 class MLStub(object):
@@ -18,12 +17,12 @@ class MLStub(object):
         self.PingOne = channel.unary_unary(
                 '/selector.ML/PingOne',
                 request_serializer=ml__pb2.SelectorPing.SerializeToString,
-                response_deserializer=selector__pb2.Empty.FromString,
+                response_deserializer=ml__pb2.Empty.FromString,
                 )
         self.PingAll = channel.unary_unary(
                 '/selector.ML/PingAll',
-                request_serializer=selector__pb2.Empty.SerializeToString,
-                response_deserializer=selector__pb2.Empty.FromString,
+                request_serializer=ml__pb2.Empty.SerializeToString,
+                response_deserializer=ml__pb2.Empty.FromString,
                 )
 
 
@@ -48,12 +47,12 @@ def add_MLServicer_to_server(servicer, server):
             'PingOne': grpc.unary_unary_rpc_method_handler(
                     servicer.PingOne,
                     request_deserializer=ml__pb2.SelectorPing.FromString,
-                    response_serializer=selector__pb2.Empty.SerializeToString,
+                    response_serializer=ml__pb2.Empty.SerializeToString,
             ),
             'PingAll': grpc.unary_unary_rpc_method_handler(
                     servicer.PingAll,
-                    request_deserializer=selector__pb2.Empty.FromString,
-                    response_serializer=selector__pb2.Empty.SerializeToString,
+                    request_deserializer=ml__pb2.Empty.FromString,
+                    response_serializer=ml__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -78,7 +77,7 @@ class ML(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/selector.ML/PingOne',
             ml__pb2.SelectorPing.SerializeToString,
-            selector__pb2.Empty.FromString,
+            ml__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -94,7 +93,7 @@ class ML(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/selector.ML/PingAll',
-            selector__pb2.Empty.SerializeToString,
-            selector__pb2.Empty.FromString,
+            ml__pb2.Empty.SerializeToString,
+            ml__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
