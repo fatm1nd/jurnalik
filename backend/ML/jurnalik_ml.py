@@ -102,12 +102,14 @@ def delete_data():
 
 
 def get_one(user_id):
+
     # print(user_id)
 
     con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     data = {'user_id': [], 'post_id': [], 'text': []}
+
 
     cur.execute("SELECT post_id FROM raw_posts WHERE user_id=%s", (user_id,))
     post_ids = cur.fetchall()
@@ -133,7 +135,7 @@ def get_one(user_id):
 
 
 def get_all():
-    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
     cur = con.cursor()
 
     arr_data = []
@@ -169,10 +171,11 @@ def get_all():
 
 
 def push(data, user_id):
-    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
     cur = con.cursor()
 
     arr_remove = remove_duplicates(data['text_clean'])
+
 
     cur.execute(f"SELECT * FROM raw_posts WHERE user_id={user_id[0]}")
     insert_data = cur.fetchall()
