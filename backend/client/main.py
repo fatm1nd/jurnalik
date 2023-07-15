@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-import client_db
 import time
 import client_db as db
 import selector_pb2 as sel_proto
