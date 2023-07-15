@@ -13,12 +13,12 @@ import java.util.Properties;
 public class ConnectionUtil {
 
     public Connection connect_to_db(String dbname, String user, String pass) {
-        String url = "jdbc:postgresql://localhost:5432/" + dbname;
+        String url = "jdbc:postgresql://85.234.110.105:5432/" + dbname;
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", pass);
         try {
-            Class.forName("org.postgresql.Driver");
+//            Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, props);
             if (conn != null) {
                 System.out.println("Connection Established");
@@ -37,7 +37,7 @@ public class ConnectionUtil {
     public void insert_row_into_raw_posts(Connection conn, String table_name, UserInfo user, RawPost post) {
         Statement statement;
         try {
-            String query = "INSERT INTO " + table_name + " (post_id, source, user_id) VALUES (" + post.getPost_id() + ", 'vk', " + user.getUserId() + ");";
+            String query = "INSERT INTO " + table_name + " (post_id, user_id, group_id) VALUES (" + post.getPost_id() + ", " + user.getUserId() + ", " + post.getGroup_id() + ");";
             statement = conn.createStatement();
             statement.executeUpdate(query);
 
@@ -45,22 +45,34 @@ public class ConnectionUtil {
         }
     }
 
-    public void insert_row_into_raw_items(Connection conn, String table_name, int post_id, RawItem item) {
+    public void insert_row_into_items(Connection conn, String table_name, int post_id, RawItem item) {
         Statement statement;
         try {
-            String query = "INSERT INTO " + table_name + " (post_id, item, type) VALUES (" + post_id + ", '" + item.getItem() + "', '" + item.getType() + "');";
+            String query = "INSERT INTO " + table_name + " (item, post_id, type) VALUES ('" + item.getItem() + "', " + post_id + ", '" + item.getType() + "');";
             statement = conn.createStatement();
             statement.executeUpdate(query);
 
         } catch (Exception e) {
         }
     }
+
+    public void insert_row_into_groups_and_channels(int group_id, String group_name, String picture, String sourse, Connection conn){
+        Statement statement;
+        try {
+            String query = "INSERT INTO " + "groups_and_channels" + " (group_id, group_name, picture, source) VALUES (" + group_id + ", '" + group_name + "', '" + picture + "', '" + sourse   + "');";
+            statement = conn.createStatement();
+            statement.executeUpdate(query);
+
+        } catch (Exception e) {
+        }
+    }
+
 
     public List<UserInfo> selectAllUserInfo(Connection conn, String table_name) throws SQLException {
         Statement statement;
         List<UserInfo> userInfoList = new ArrayList<>();
         try {
-            String query = "SELECT * FROM " + table_name + " JOIN FULL_USER_IDS ON VK_TABLE.vk_id = FULL_USER_IDS.vk_id;";
+            String query = "SELECT * FROM " + table_name + " JOIN full_users_ids ON VK_TABLE.vk_id = full_users_ids.vk_id;";
             statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(query);
@@ -75,6 +87,25 @@ public class ConnectionUtil {
         } catch (Exception e) {
         }
         return userInfoList;
+    }
+
+    public UserInfo selectOneUserInfo(Connection conn, String table_name, int user_id) {
+        Statement statement;
+        try {
+            String query = "SELECT * FROM " + table_name + " JOIN full_users_ids ON VK_TABLE.vk_id = full_users_ids.vk_id WHERE user_id = " + user_id +  " ;";
+            statement = conn.createStatement();
+
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                int vk_id = result.getInt("vk_id");
+                String vk_token = result.getString("vk_token");
+                UserInfo userInfo = new UserInfo(user_id, vk_id, 0, vk_token);
+                return userInfo;
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public void delete(Connection conn, int idm) {

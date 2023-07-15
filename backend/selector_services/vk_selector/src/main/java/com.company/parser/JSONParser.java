@@ -4,17 +4,17 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.company.db.DBController;
 import com.company.impl.RawItem;
 import com.company.impl.RawPost;
 import org.json.*;
 
 public class JSONParser {
-    public HashSet<Map.Entry<String, String>> parseUserVKGroups(String jsonResponse, String token ) {
+    public HashSet<Map.Entry<String, String>> parseUserVKGroups(String jsonResponse, String token) {
         HashSet<Map.Entry<String, String>> items = new HashSet<>();
 
         Pattern pattern = Pattern.compile("\"items\":\\[([^\\]]+)\\]");
         Matcher matcher = pattern.matcher(jsonResponse);
-
 
 
         if (matcher.find()) {
@@ -29,7 +29,7 @@ public class JSONParser {
         return items;
     }
 
-    public Map.Entry<String, String> parseShortVKName(String jsonResponse, String token){
+    public Map.Entry<String, String> parseShortVKName(String jsonResponse, String token) {
         Pattern pattern = Pattern.compile("\"screen_name\":\"(\\w+)\",");
         Matcher matcher = pattern.matcher(jsonResponse);
 
@@ -41,8 +41,8 @@ public class JSONParser {
         }
     }
 
-    public List<RawPost> parseGroupPosts(String jsonResponse){
-        List<RawPost> posts= new ArrayList<>();
+    public List<RawPost> parseGroupPosts(String jsonResponse, String group_id) {
+        List<RawPost> posts = new ArrayList<>();
         try {
             JSONArray jsonObjects = (new JSONObject(new JSONObject(jsonResponse).get("response").toString())).getJSONArray("items");
             for (Object postObj : jsonObjects) {
@@ -61,22 +61,41 @@ public class JSONParser {
                     }
                 }
                 rawItems.add(new RawItem(text, "text"));
-                posts.add(new RawPost(rawItems, post_id));
+                posts.add(new RawPost(rawItems, post_id, Integer.parseInt(group_id)));
             }
             return posts;
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             return posts;
         }
     }
 
-    public HashMap<String, String> parseShortVKNameId(String jsonResponse, String id ) {
+    public HashMap<String, String> parseShortVKNameId(String jsonResponse, String id, DBController dbController) {
         HashMap<String, String> map = new HashMap<>();
+        Pattern patternId = Pattern.compile("\"id\":(\\w+),");
+        Matcher matcherId = patternId.matcher(jsonResponse);
+        Pattern patternName = Pattern.compile("\"name\":\"(\\w+)\",");
+        Matcher matcherName = patternName.matcher(jsonResponse);
+        Pattern patternPhoto = Pattern.compile("\"photo_200\":\"(.+)\"}");
+        Matcher matcherPhoto = patternPhoto.matcher(jsonResponse);
         Pattern pattern = Pattern.compile("\"screen_name\":\"(\\w+)\",");
         Matcher matcher = pattern.matcher(jsonResponse);
 
         if (matcher.find()) {
             String screenName = matcher.group(1);
+            String name = "";
+            String photo = "";
+            int groupId = 0;
+
+            if (matcherName.find())
+                name = matcherName.group(1);
+            if (matcherPhoto.find())
+                photo = matcherPhoto.group(1);
+            if (matcherId.find())
+                groupId = Integer.parseInt(matcherId.group(1));
+            if(name.equals(""))
+                name = screenName;
+            dbController.putGroup(groupId, name, photo, "vk");
+
             map.put(id, screenName);
             return map;
         }
