@@ -1,0 +1,11 @@
+psycopg2
+python-dotenv
+telethon
+telebot
+lxml
+requests
+bs4
+grpcio 
+grpcio-tools 
+googleapis-common-protos
+asyncio

@@ -1,0 +1,8 @@
+psycopg2
+python-dotenv
+telethon
+telebot
+requests
+grpcio 
+grpcio-tools 
+googleapis-common-protos

@@ -21,6 +21,9 @@ services:
       - database
     ports:
      - 80:80
+     - 5000:5000
+    command: sh -c 'python3 main.py'
+
   
   ml_service:
     build: ML
@@ -30,16 +33,44 @@ services:
     command: sh -c 'python3 main.py'
 
   telegram_selector:
-    build: selector_services/telegram_selector
+    build: selector_services/telegram_selector/selector
     
     depends_on:
       - database
 
-  vk_selector:
-    build: selector_services/vk_selector
+  # grpctester_telegram_selector:
+  #   build: selector_services/telegram_selector/client
     
-    depends_on:
-      - database
+  #   depends_on:
+  #     - database
+
+  #   command: sh -c 'python3 client.py'
+
+    # command: ./run.sh
+
+  # grpcui:
+  #   image: wongnai/grpcui
+  #   environment:
+  #     GRPCUI_SERVER: 'telegram_selector:50051'
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - telegram_selector
+
+
+  # telegram_bot:
+  #   build: selector_services/telegram_selector/bot
+    
+  #   depends_on:
+  #     - database
+
+  #   command: sh -c 'python3 bot.py' 
+
+  # vk_selector:
+  #   build: selector_services/vk_selector
+    
+  #   depends_on:
+  #     - database
 
     
 

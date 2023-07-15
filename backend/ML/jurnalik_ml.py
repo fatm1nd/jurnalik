@@ -20,7 +20,7 @@ PORT = config["POSTGRES_PORT"]
 USER = config["POSTGRES_USER"]
 PASSWORD = config["POSTGRES_PASSWORD"]
 DATABASE = config["POSTGRES_DATABASE"]
-
+# HOST = "localhost"
 
 def tokenizer_data(data):
     tokenizer = RegexpTokenizer(r'\w+')
@@ -28,7 +28,7 @@ def tokenizer_data(data):
 
 
 def stop_words_clean(text):
-    print(text,flush=True)
+    # print(text,flush=True)
     language = detect(" ".join(text))
 
     if language == 'en':
@@ -40,7 +40,7 @@ def stop_words_clean(text):
 
 
 def normalize_tokens(text):
-    print(text,flush=True)
+    # print(text,flush=True)
     language = detect(" ".join(text))
 
     if language == 'en':
@@ -102,16 +102,19 @@ def delete_data():
 
 
 def get_one(user_id):
-    print(user_id)
 
-    con = psycopg2.connect(database="jurnalik", user="postgres", password="13062013", host="127.0.0.1", port="5432")
+    # print(user_id)
+
+    con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     data = {'user_id': [], 'post_id': [], 'text': []}
 
-    cur.execute("SELECT post_id FROM raw_posts WHERE user_id=%s", (int(user_id),))
-    post_ids = cur.fetchall()
 
+    cur.execute("SELECT post_id FROM raw_posts WHERE user_id=%s", (user_id,))
+    post_ids = cur.fetchall()
+    if len(post_ids) == 0:
+        return 
     for post_id in post_ids:
         cur.execute("SELECT item FROM raw_posts as p \
                 JOIN items as i ON i.post_id=p.post_id WHERE user_id=%s AND p.post_id = %s AND type ='text'",
@@ -173,7 +176,8 @@ def push(data, user_id):
 
     arr_remove = remove_duplicates(data['text_clean'])
 
-    cur.execute("SELECT * FROM raw_posts WHERE user_id=%s", (user_id))
+
+    cur.execute(f"SELECT * FROM raw_posts WHERE user_id={user_id[0]}")
     insert_data = cur.fetchall()
 
     for j in range(len(insert_data)):
@@ -191,15 +195,22 @@ def run_one(user_id):
     with open("model.pkl", 'rb') as file:
         model = pickle.load(file)
 
-    data = get_one(user_id)
+    try:
+        data = get_one(user_id)
 
+        # print(data,flush=True)
+        if data.empty:
+            pass
+    except:
+        print("Empty DB for user")
+        return
     data = preprocessing(data)
 
     data_test = data['text_clean']
 
     data['category'] = model.predict(data_test)
     data['category'] = data['category'].apply(lambda x: decoder(x))
-    push(data, str(data['user_id'][0]))
+    push(data, data['user_id'][0])
 
 
 def run_all():
@@ -216,3 +227,5 @@ def run_all():
 
         push(data, data['user_id'][0])
 
+
+# run_all()

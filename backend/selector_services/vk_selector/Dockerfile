@@ -1,15 +1,12 @@
-# Use a base image with JDK and Maven pre-installed
-FROM maven:3.8.3-openjdk-11-slim
+FROM maven:3.8-openjdk-18-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the source code and pom.xml to the working directory
-COPY src ./src
-COPY pom.xml .
-
-# Compile the Java code
-RUN mvn compile
-
-# Set the entry point to run the compiled Java application
-CMD ["java", "-cp", "target/classes", "com.company.Main"]
+#
+# Package stage
+#
+FROM openjdk:18-slim
+COPY --from=build /home/app/target/vk_selector-1.0-SNAPSHOT.jar /usr/local/lib/demo.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]

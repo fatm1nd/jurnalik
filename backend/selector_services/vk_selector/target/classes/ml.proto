@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package selector;
+
+import "selector.proto";
+
+service ML{
+    rpc PingOne(SelectorPing) returns (selector.Empty);
+    rpc PingAll(selector.Empty) returns (selector.Empty);
+}
+
+message SelectorPing{
+    string user = 1;
+    Source source = 2;
+}
+
+enum Source{
+    VK = 0;
+    TG = 1;
+}
