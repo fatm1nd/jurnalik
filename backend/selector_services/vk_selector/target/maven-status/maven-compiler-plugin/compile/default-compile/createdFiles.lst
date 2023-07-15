@@ -9,6 +9,7 @@ selector/SelectorGrpc$SelectorStub.class
 selector/SelectorOuterClass.class
 selector/SelectorOuterClass$User$1.class
 selector/Ml$1.class
+selector/Ml$Source$1.class
 selector/SelectorGrpc$SelectorBlockingStub.class
 com/company/impl/AppInfo.class
 com/company/impl/RawPost.class
@@ -25,13 +26,14 @@ selector/MLGrpc$MLBlockingStub.class
 com/company/Info.class
 selector/SelectorGrpc$SelectorMethodDescriptorSupplier.class
 selector/MLGrpc$MLStub.class
-selector/Ml$SelectorPing$Source$1.class
 com/company/impl/UserInfo.class
 selector/MLGrpc.class
+selector/Ml$Source.class
 selector/Ml$SelectorPing$1.class
 com/company/Selector.class
 com/company/impl/RawItem.class
 selector/SelectorOuterClass$Empty.class
+com/company/client/MLClent.class
 com/company/Main.class
 selector/SelectorOuterClass$User.class
 selector/SelectorGrpc$SelectorFileDescriptorSupplier.class
@@ -41,7 +43,6 @@ selector/MLGrpc$MLBaseDescriptorSupplier.class
 selector/MLGrpc$MLMethodDescriptorSupplier.class
 selector/SelectorGrpc$SelectorBaseDescriptorSupplier.class
 com/company/server/SelectorImpl.class
-selector/Ml$SelectorPing$Source.class
 selector/SelectorOuterClass$EmptyOrBuilder.class
 selector/SelectorOuterClass$Empty$Builder.class
 com/company/parser/JSONParser.class

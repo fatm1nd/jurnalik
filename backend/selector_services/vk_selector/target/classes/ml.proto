@@ -11,9 +11,10 @@ service ML{
 
 message SelectorPing{
     string user = 1;
-    enum Source{
-        VK = 0;
-        TG = 1;
-    }
     Source source = 2;
+}
+
+enum Source{
+    VK = 0;
+    TG = 1;
 }

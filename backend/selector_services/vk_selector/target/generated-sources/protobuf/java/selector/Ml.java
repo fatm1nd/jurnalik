@@ -14,6 +14,104 @@ public final class Ml {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  /**
+   * Protobuf enum {@code selector.Source}
+   */
+  public enum Source
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>VK = 0;</code>
+     */
+    VK(0),
+    /**
+     * <code>TG = 1;</code>
+     */
+    TG(1),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>VK = 0;</code>
+     */
+    public static final int VK_VALUE = 0;
+    /**
+     * <code>TG = 1;</code>
+     */
+    public static final int TG_VALUE = 1;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Source valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static Source forNumber(int value) {
+      switch (value) {
+        case 0: return VK;
+        case 1: return TG;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Source>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        Source> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<Source>() {
+            public Source findValueByNumber(int number) {
+              return Source.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return selector.Ml.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final Source[] VALUES = values();
+
+    public static Source valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Source(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:selector.Source)
+  }
+
   public interface SelectorPingOrBuilder extends
       // @@protoc_insertion_point(interface_extends:selector.SelectorPing)
       com.google.protobuf.MessageOrBuilder {
@@ -29,13 +127,13 @@ public final class Ml {
         getUserBytes();
 
     /**
-     * <code>.selector.SelectorPing.Source source = 2;</code>
+     * <code>.selector.Source source = 2;</code>
      */
     int getSourceValue();
     /**
-     * <code>.selector.SelectorPing.Source source = 2;</code>
+     * <code>.selector.Source source = 2;</code>
      */
-    selector.Ml.SelectorPing.Source getSource();
+    selector.Ml.Source getSource();
   }
   /**
    * Protobuf type {@code selector.SelectorPing}
@@ -122,104 +220,6 @@ public final class Ml {
               selector.Ml.SelectorPing.class, selector.Ml.SelectorPing.Builder.class);
     }
 
-    /**
-     * Protobuf enum {@code selector.SelectorPing.Source}
-     */
-    public enum Source
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>VK = 0;</code>
-       */
-      VK(0),
-      /**
-       * <code>TG = 1;</code>
-       */
-      TG(1),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>VK = 0;</code>
-       */
-      public static final int VK_VALUE = 0;
-      /**
-       * <code>TG = 1;</code>
-       */
-      public static final int TG_VALUE = 1;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static Source valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static Source forNumber(int value) {
-        switch (value) {
-          case 0: return VK;
-          case 1: return TG;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Source>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Source> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Source>() {
-              public Source findValueByNumber(int number) {
-                return Source.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return selector.Ml.SelectorPing.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Source[] VALUES = values();
-
-      public static Source valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private Source(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:selector.SelectorPing.Source)
-    }
-
     public static final int USER_FIELD_NUMBER = 1;
     private volatile java.lang.Object user_;
     /**
@@ -257,18 +257,18 @@ public final class Ml {
     public static final int SOURCE_FIELD_NUMBER = 2;
     private int source_;
     /**
-     * <code>.selector.SelectorPing.Source source = 2;</code>
+     * <code>.selector.Source source = 2;</code>
      */
     public int getSourceValue() {
       return source_;
     }
     /**
-     * <code>.selector.SelectorPing.Source source = 2;</code>
+     * <code>.selector.Source source = 2;</code>
      */
-    public selector.Ml.SelectorPing.Source getSource() {
+    public selector.Ml.Source getSource() {
       @SuppressWarnings("deprecation")
-      selector.Ml.SelectorPing.Source result = selector.Ml.SelectorPing.Source.valueOf(source_);
-      return result == null ? selector.Ml.SelectorPing.Source.UNRECOGNIZED : result;
+      selector.Ml.Source result = selector.Ml.Source.valueOf(source_);
+      return result == null ? selector.Ml.Source.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -288,7 +288,7 @@ public final class Ml {
       if (!getUserBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, user_);
       }
-      if (source_ != selector.Ml.SelectorPing.Source.VK.getNumber()) {
+      if (source_ != selector.Ml.Source.VK.getNumber()) {
         output.writeEnum(2, source_);
       }
       unknownFields.writeTo(output);
@@ -303,7 +303,7 @@ public final class Ml {
       if (!getUserBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, user_);
       }
-      if (source_ != selector.Ml.SelectorPing.Source.VK.getNumber()) {
+      if (source_ != selector.Ml.Source.VK.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, source_);
       }
@@ -661,13 +661,13 @@ public final class Ml {
 
       private int source_ = 0;
       /**
-       * <code>.selector.SelectorPing.Source source = 2;</code>
+       * <code>.selector.Source source = 2;</code>
        */
       public int getSourceValue() {
         return source_;
       }
       /**
-       * <code>.selector.SelectorPing.Source source = 2;</code>
+       * <code>.selector.Source source = 2;</code>
        */
       public Builder setSourceValue(int value) {
         source_ = value;
@@ -675,17 +675,17 @@ public final class Ml {
         return this;
       }
       /**
-       * <code>.selector.SelectorPing.Source source = 2;</code>
+       * <code>.selector.Source source = 2;</code>
        */
-      public selector.Ml.SelectorPing.Source getSource() {
+      public selector.Ml.Source getSource() {
         @SuppressWarnings("deprecation")
-        selector.Ml.SelectorPing.Source result = selector.Ml.SelectorPing.Source.valueOf(source_);
-        return result == null ? selector.Ml.SelectorPing.Source.UNRECOGNIZED : result;
+        selector.Ml.Source result = selector.Ml.Source.valueOf(source_);
+        return result == null ? selector.Ml.Source.UNRECOGNIZED : result;
       }
       /**
-       * <code>.selector.SelectorPing.Source source = 2;</code>
+       * <code>.selector.Source source = 2;</code>
        */
-      public Builder setSource(selector.Ml.SelectorPing.Source value) {
+      public Builder setSource(selector.Ml.Source value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -695,7 +695,7 @@ public final class Ml {
         return this;
       }
       /**
-       * <code>.selector.SelectorPing.Source source = 2;</code>
+       * <code>.selector.Source source = 2;</code>
        */
       public Builder clearSource() {
         
@@ -770,13 +770,12 @@ public final class Ml {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\010ml.proto\022\010selector\032\016selector.proto\"e\n\014" +
-      "SelectorPing\022\014\n\004user\030\001 \001(\t\022-\n\006source\030\002 \001" +
-      "(\0162\035.selector.SelectorPing.Source\"\030\n\006Sou" +
-      "rce\022\006\n\002VK\020\000\022\006\n\002TG\020\0012e\n\002ML\0222\n\007PingOne\022\026.s" +
-      "elector.SelectorPing\032\017.selector.Empty\022+\n" +
-      "\007PingAll\022\017.selector.Empty\032\017.selector.Emp" +
-      "tyb\006proto3"
+      "\n\010ml.proto\022\010selector\032\016selector.proto\">\n\014" +
+      "SelectorPing\022\014\n\004user\030\001 \001(\t\022 \n\006source\030\002 \001" +
+      "(\0162\020.selector.Source*\030\n\006Source\022\006\n\002VK\020\000\022\006" +
+      "\n\002TG\020\0012e\n\002ML\0222\n\007PingOne\022\026.selector.Selec" +
+      "torPing\032\017.selector.Empty\022+\n\007PingAll\022\017.se" +
+      "lector.Empty\032\017.selector.Emptyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
