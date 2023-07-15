@@ -1,7 +1,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.company</groupId>
-    <artifactId>untitled1</artifactId>
+    <artifactId>vk_selector</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>com.company</name>
