@@ -18,7 +18,7 @@ config = dotenv_values(".env")
 print(f"ML Module is ready. DB is on {config['POSTGRES_HOST']}",flush=True)
 
 VK_APPLICATION_ID = config['VK_APPLICATION_ID']
-VK_APPLICATION_SECRET = ["VK_APPLICATION_ID"]
+VK_APPLICATION_SECRET = config["VK_APPLICATION_ID"]
 
 app = Flask(__name__)
 
