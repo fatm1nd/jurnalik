@@ -125,7 +125,8 @@ class DataBase():
     def authVkUser(self,user_id,vk_id,token):
         self.con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
         cur = self.con.cursor()
-        cur.execute(f"INSERT INTO vk_table (vk_id, vk_token) VALUES ({int(vk_id)}, {str(token)})")
+        print(f"INSERT INTO vk_table (vk_id, vk_token) VALUES ({int(vk_id)}, {str(token)})")
+        cur.execute(f"INSERT INTO vk_table (vk_id, vk_token) VALUES ({int(vk_id)}, '{str(token)}')")
         cur.execute(f"UPDATE full_users_ids SET vk_id={int(vk_id)} WHERE user_id={int(user_id)}")
         self.con.commit()
         self.con.close()
