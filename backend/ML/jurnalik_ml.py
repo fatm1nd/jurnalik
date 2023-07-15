@@ -20,7 +20,7 @@ PORT = config["POSTGRES_PORT"]
 USER = config["POSTGRES_USER"]
 PASSWORD = config["POSTGRES_PASSWORD"]
 DATABASE = config["POSTGRES_DATABASE"]
-
+# HOST = "localhost"
 
 def tokenizer_data(data):
     tokenizer = RegexpTokenizer(r'\w+')
@@ -111,7 +111,8 @@ def get_one(user_id):
 
     cur.execute("SELECT post_id FROM raw_posts WHERE user_id=%s", (user_id,))
     post_ids = cur.fetchall()
-
+    if len(post_ids) == 0:
+        return 
     for post_id in post_ids:
         cur.execute("SELECT item FROM raw_posts as p \
                 JOIN items as i ON i.post_id=p.post_id WHERE user_id=%s AND p.post_id = %s AND type ='text'",
@@ -191,8 +192,15 @@ def run_one(user_id):
     with open("model.pkl", 'rb') as file:
         model = pickle.load(file)
 
-    data = get_one(user_id)
+    try:
+        data = get_one(user_id)
 
+        # print(data,flush=True)
+        if data.empty:
+            pass
+    except:
+        print("Empty DB for user")
+        return
     data = preprocessing(data)
 
     data_test = data['text_clean']
@@ -215,3 +223,6 @@ def run_all():
         data['category'] = data['category'].apply(lambda x: decoder(x))
 
         push(data, data['user_id'][0])
+
+
+# run_all()

@@ -38,13 +38,13 @@ services:
     depends_on:
       - database
 
-  grpctester_telegram_selector:
-    build: selector_services/telegram_selector/client
+  # grpctester_telegram_selector:
+  #   build: selector_services/telegram_selector/client
     
-    depends_on:
-      - database
+  #   depends_on:
+  #     - database
 
-    command: sh -c 'python3 client.py'
+  #   command: sh -c 'python3 client.py'
 
     # command: ./run.sh
 

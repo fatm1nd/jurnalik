@@ -11,6 +11,8 @@ import selector_pb2 as your_proto
 import selector_pb2_grpc as your_proto_grpc
 import db
 
+
+
 config = configparser.ConfigParser()
 config.read("config.ini")
 
@@ -77,7 +79,7 @@ def start_ex(message):
     bot.send_message(message.chat.id,
                      'Отлично!\n'
                      'Сейчас мы составим список каналов, новости которых вы хотите читать.\n'
-                     'Пришлите ссылку на желаемый канал или перешлите из него пост.')
+                     'Перешлите пост из желаемого канала.')
 
 
 @bot.message_handler(state=BotStates.waiting_for_channels, func=lambda message: message.forward_from_chat,
@@ -125,7 +127,7 @@ def handle_all_messages(message):
     markup.add(InlineKeyboardButton("Завершить", callback_data="end_with_channels"))
 
     bot.send_message(message.chat.id,
-                     "Пришлите ссылку на желаемый канал или перешлите из него пост.")
+                     "Перешлите пост из желаемого канала.")
 
 
 @bot.message_handler(state=BotStates.delete_channel, func=lambda message: True)
@@ -162,6 +164,7 @@ def handle_delete_messages(message):
     bot.send_message(message.chat.id, "Ваш список каналов:\n" + '\n'.join(all_channels), reply_markup=markup)
 
 
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     if call.data == "end_with_channels":
@@ -181,9 +184,9 @@ def callback_query(call):
         # pingSelector(USERS_IDS[call.message.chat.id])
 
     if call.data == "delete_channel":
-        if not channels[call.message.chat.id]:
+        if not call.message.chat.id in channels:
             # TODO: get from db
-            pass
+            return
         bot.set_state(call.message.chat.id, BotStates.delete_channel, call.message.chat.id)
         markup = ReplyKeyboardMarkup(row_width=1)
         all_channels = [x["title"] for x in channels[call.message.chat.id]]
@@ -193,9 +196,9 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Выберите канал, которые желаете удалить", reply_markup=markup)
 
     if call.data == "edit_channels":
-        if not channels[call.message.chat.id]:
+        if not call.message.chat.id in channels:
             # TODO: get from db
-            pass
+            return
         markup = InlineKeyboardMarkup()
         markup.row_width = 2
         markup.add(InlineKeyboardButton("Удалить канал", callback_data="delete_channel"))

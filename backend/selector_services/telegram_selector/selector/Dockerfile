@@ -10,6 +10,8 @@ ADD get_posts.py /
 ADD MediaParser.py /
 ADD selector_pb2_grpc.py /
 ADD selector_pb2.py /
+ADD ml_pb2_grpc.py /
+ADD ml_pb2.py /
 ADD telegram_module.py /
 ADD db.py /
 ADD config.ini /

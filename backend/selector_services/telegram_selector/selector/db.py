@@ -2,6 +2,11 @@ import psycopg2
 import logging
 import telegram_module
 
+import ml_pb2_grpc
+import ml_pb2 
+
+import grpc
+
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w")
 
 
@@ -48,7 +53,7 @@ def save_channels(id, channels):
         exit()
 
     cursor = conn.cursor()
-    cursor.execute(f"SELECT user_id FROM full_users_ids WHERE telegram_id={id}")
+    cursor.execute(f"SELECT user_id FROM full_users_ids WHERE telegram_id={id} ORDER BY user_id DESC")
     res = cursor.fetchall()
     print(res,flush=True)
     user_id = res[0][0]
@@ -68,9 +73,6 @@ def save_channels(id, channels):
         cursor.execute(add_channel)
         conn.commit()
     conn.close()
-    print("Start downloading for one", flush=True)
-    telegram_module.handle_one(user_id)
-    print("Stop downloading for one", flush=True)
 
 
 def get_ids():

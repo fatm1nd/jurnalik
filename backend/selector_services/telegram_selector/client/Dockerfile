@@ -9,6 +9,7 @@ ADD ./ml_pb2.py /
 ADD ./selector_pb2_grpc.py /
 ADD ./selector_pb2.py /
 
+
 WORKDIR /
 
 # CMD [ "python3" , "client.py"]
