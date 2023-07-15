@@ -75,7 +75,7 @@ def getGroups(user_id):
 @app.route('/user/VK')
 def vkAuth():
     # request.args.get('username')
-    print(requests.args, flush=True)
+    print(request.args, flush=True)
     code = request.args.get('code')
     user_id = request.args.get('state')
     r = requests.get(f"https://oauth.vk.com/access_token?client_id={VK_APPLICATION_ID}&client_secret={VK_APPLICATION_SECRET}&redirect_uri=http://85.234.110.105/user/VK&code={code}")
