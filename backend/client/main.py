@@ -78,6 +78,7 @@ def vkAuth():
     print(request.args, flush=True)
     code = request.args.get('code')
     user_id = request.args.get('state')
+    print(f"https://oauth.vk.com/access_token?client_id={VK_APPLICATION_ID}&client_secret={VK_APPLICATION_SECRET}&redirect_uri=http://85.234.110.105/user/VK&code={code}", flush=True
     r = requests.get(f"https://oauth.vk.com/access_token?client_id={VK_APPLICATION_ID}&client_secret={VK_APPLICATION_SECRET}&redirect_uri=http://85.234.110.105/user/VK&code={code}")
     response = r.json()
     print(response, flush=True)
