@@ -3,8 +3,7 @@ name: Deployment to Host
 on:
   pull_request:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+
 
 jobs:
 #   lint:
