@@ -133,7 +133,9 @@ public class Selector {
                 int post_id = post.getPost_id();
                 List<RawItem> items = post.getItems();
                 for (RawItem item : items) {
-                    dbController.putItem(post_id, item);
+                    if(item.getItem() != null)
+                        if(item.getItem() != "")
+                            dbController.putItem(post_id, item);
                 }
             }
         }

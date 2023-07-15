@@ -13,8 +13,8 @@ public class MLClent {
         this.port = port;
     }
 
-    private String ip = "localhost";
-    private int port = 30000;
+    private String ip = "mlservice";
+    private int port = 50051;
     public void pingOne(int user_id){
         System.out.println("pingOne MLServer in ip + port:" + ip + ":" + port);
         ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, port)

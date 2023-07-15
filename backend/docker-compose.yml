@@ -25,7 +25,7 @@ services:
     command: sh -c 'python3 main.py'
 
   
-  ml_service:
+  mlservice:
     build: ML
     
     depends_on:
@@ -66,11 +66,11 @@ services:
 
   #   command: sh -c 'python3 bot.py' 
 
-  # vk_selector:
-  #   build: selector_services/vk_selector
+  vk_selector:
+    build: selector_services/vk_selector
     
-  #   depends_on:
-  #     - database
+    depends_on:
+      - database
 
     
 
