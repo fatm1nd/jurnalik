@@ -75,11 +75,13 @@ def getGroups(user_id):
 @app.route('/user/VK')
 def vkAuth():
     # request.args.get('username')
+    print(requests.args, flush=True)
     code = request.args.get('code')
     user_id = request.args.get('state')
     r = requests.get(f"https://oauth.vk.com/access_token?client_id={VK_APPLICATION_ID}&client_secret={VK_APPLICATION_SECRET}&redirect_uri=http://85.234.110.105/user/VK&code={code}")
     response = r.json()
-    token = response['token']
+    print(response, flush=True)
+    token = response['access_token']
     vk_id = response['user_id']
     if db.DataBase().authVkUser(user_id,vk_id,token):
         return "Вы успешно авторизированы! Можете возвращаться в приложение!"
