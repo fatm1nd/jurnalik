@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ConnectionUtil {
 
     public Connection connect_to_db(String dbname, String user, String pass) {
-        String url = "jdbc:postgresql://85.234.110.105:5432/" + dbname;
+        String url = "jdbc:postgresql://database:5432/" + dbname;
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", pass);

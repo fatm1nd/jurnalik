@@ -30,14 +30,14 @@ print(
 
 
 def ping_ML_module_all():
-    channel = grpc.insecure_channel(f'{"ml_service"}:{"50051"}')
+    channel = grpc.insecure_channel(f'{"mlservice"}:{"50051"}')
     stub = ml_grpc.MLStub(channel)
     selector_ping = ml_proto.Empty()
     stub.PingAll(selector_ping)
 
 
 def ping_ML_module_one(user_id):
-    channel = grpc.insecure_channel(f'{"ml_service"}:{"50051"}')
+    channel = grpc.insecure_channel(f'{"mlservice"}:{"50051"}')
     stub = ml_grpc.MLStub(channel)
     selector_ping = ml_proto.SelectorPing()
     selector_ping.user = str(user_id)

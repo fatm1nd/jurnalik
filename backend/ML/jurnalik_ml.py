@@ -29,14 +29,24 @@ def tokenizer_data(data):
 
 def stop_words_clean(text):
     # print(text,flush=True)
-    language = detect(" ".join(text))
+    
+    try:
+        language = detect(" ".join(text))
 
-    if language == 'en':
-        stop_words = set(nltk.corpus.stopwords.words("english"))
+        if language == 'en':
+            stop_words = set(nltk.corpus.stopwords.words("english"))
+            return [item for item in text if item not in stop_words]
+
+        stop_words = set(nltk.corpus.stopwords.words("russian"))
+        return [item for item in text if item not in stop_words]
+    except:
+        text = ['bts', 'победа', 'песня']
+        stop_words = set(nltk.corpus.stopwords.words("russian"))
         return [item for item in text if item not in stop_words]
 
-    stop_words = set(nltk.corpus.stopwords.words("russian"))
-    return [item for item in text if item not in stop_words]
+
+        
+
 
 
 def normalize_tokens(text):
@@ -102,12 +112,14 @@ def delete_data():
 
 
 def get_one(user_id):
+
     # print(user_id)
 
     con = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cur = con.cursor()
 
     data = {'user_id': [], 'post_id': [], 'text': []}
+
 
     cur.execute("SELECT post_id FROM raw_posts WHERE user_id=%s", (user_id,))
     post_ids = cur.fetchall()
@@ -138,7 +150,7 @@ def get_all():
 
     arr_data = []
 
-    cur.execute("DELETE FROM prepared_posts")
+    cur.execute("DELETE FROM prepared_posts WHERE True")
 
     cur.execute("SELECT DISTINCT user_id FROM raw_posts as p")
     user_ids = cur.fetchall()
@@ -173,6 +185,7 @@ def push(data, user_id):
     cur = con.cursor()
 
     arr_remove = remove_duplicates(data['text_clean'])
+
 
     cur.execute(f"SELECT * FROM raw_posts WHERE user_id={user_id[0]}")
     insert_data = cur.fetchall()

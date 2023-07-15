@@ -2,12 +2,11 @@ package com.company.server;
 
 import com.company.Selector;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import io.grpc.stub.StreamObserver;
 import selector.SelectorGrpc;
 import selector.SelectorOuterClass;
+import selector.SelectorOuterClass;
+import com.company.client.MLClent;
 
 public class SelectorImpl extends SelectorGrpc.SelectorImplBase {
     @Override
@@ -21,6 +20,8 @@ public class SelectorImpl extends SelectorGrpc.SelectorImplBase {
         selector.SelectorOuterClass.Empty response = selector.SelectorOuterClass.Empty.newBuilder().build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+        MLClent mlClent = new MLClent();
+        mlClent.pingOne(user_id);
     }
 
     @Override
@@ -34,5 +35,7 @@ public class SelectorImpl extends SelectorGrpc.SelectorImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
+        MLClent mlClent = new MLClent();
+        mlClent.pingAll();
     }
 }

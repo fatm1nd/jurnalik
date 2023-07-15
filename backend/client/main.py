@@ -43,8 +43,11 @@ def getSources(user_id):
 
 @app.route('/user/<int:user_id>/work/ping')
 def pingJurnalik(user_id):
-    grpc_client.pingSelector(0,user_id)
-    # grpc_client.pingSelector(1,user_id)
+    sources = db.DataBase().getUsersSources(user_id)
+    if 'tg' in sources: 
+        grpc_client.pingSelector(0,user_id)
+    if 'vk' in sources:
+        grpc_client.pingSelector(1,user_id)
     return jsonify(True)
 
 # TODO Удалить счетчик
