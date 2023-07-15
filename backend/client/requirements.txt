@@ -4,3 +4,4 @@ python-dotenv
 grpcio 
 grpcio-tools 
 googleapis-common-protos
+requests

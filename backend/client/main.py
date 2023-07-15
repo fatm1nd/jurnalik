@@ -5,13 +5,21 @@ import client_db as db
 import selector_pb2 as sel_proto
 import selector_pb2_grpc as sel_grpc
 import grpc_client
-
-time.sleep(5)
+import dotenv
+import requests
 
 print(f"Client Module is ready",flush=True)
 # db = client_db.DataBase()
 # print(db.addUser(),flush=True)
 
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
+
+print(f"ML Module is ready. DB is on {config['POSTGRES_HOST']}",flush=True)
+
+VK_APPLICATION_ID = config['VK_APPLICATION_ID']
+VK_APPLICATION_SECRET = ["VK_APPLICATION_ID"]
 
 app = Flask(__name__)
 
@@ -65,12 +73,18 @@ def getGroups(user_id):
     groups = db.DataBase().getGroupsByUserId(user_id)
     return jsonify(groups)
 
-@app.route('/user/<int:user_id>/VK')
-def vkAuth(user_id):
+@app.route('/user/VK')
+def vkAuth():
     # request.args.get('username')
-    # https://oauth.vk.com/authorize?client_id=51676262&display=mobile&redirect_uri=https://oauth.vk.com/blank.html&scope=335872&response_type=token&v=5.131&userid=1323123
-    
-    return f"Авторизация прошла успешно для пользователя {user_id}"
+    code = request.args.get('code')
+    user_id = request.args.get('state')
+    r = requests.get(f"https://oauth.vk.com/access_token?client_id={VK_APPLICATION_ID}&client_secret={VK_APPLICATION_SECRET}&redirect_uri=http://85.234.110.105/user/VK&code={code}")
+    response = r.json()
+    token = response['token']
+    vk_id = response['user_id']
+    if db.DataBase().authVkUser(user_id,vk_id,token):
+        return "Вы успешно авторизированы! Можете возвращаться в приложение!"
+
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000,debug=True)
+    app.run(host="0.0.0.0",port=80,debug=True)
