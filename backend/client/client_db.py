@@ -74,7 +74,7 @@ class DataBase():
         for key, item in enumerate(itemsq):
             post_id = item[0]
             value = item[1]
-            if post_id in items.keys():
+            if post_id in items:
                 items[post_id].append({"item":value,"type":item[2]})
             else:
                 items[post_id] = [{"item":value,"type":item[2]}]
@@ -83,7 +83,7 @@ class DataBase():
 
         for key,post in enumerate(postsq):
             post_id = post[0]
-            if post_id in items.keys():
+            if post_id in items:
                 posts.append({'post_id':post_id,'group_id':post[1],'items':items[post_id],'category':post[2]})
         return posts
 
