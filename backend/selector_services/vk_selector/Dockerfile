@@ -8,5 +8,4 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 FROM openjdk:18-slim
 COPY --from=build /home/app/target/vk_selector-1.0-SNAPSHOT.jar /usr/local/lib/demo.jar
-EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
