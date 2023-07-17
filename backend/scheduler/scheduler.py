@@ -15,12 +15,10 @@ time.sleep(7)
 
 def main():
     # Create a thread to send requests periodically
-    print("Scheduler Service is running. Start initial 'SelectAll' ping.", flush=True)
-    thread = threading.Thread(target=pingSelectors)
-    thread.start()
-    print('Initial ping is sent.', flush=True)
+    print("Scheduler Service is running.", flush=True)
+    
     print('Schedule the ping')
-    schedule.every().day.at("00:00").do(pingSelectors)
+    schedule.every().day.at("21:00").do(pingSelectors)
     print("Waiting...", flush=True)
     while True:
         schedule.run_pending()
