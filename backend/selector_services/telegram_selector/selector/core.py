@@ -50,9 +50,20 @@ class SelectorServicer(your_proto_grpc.SelectorServicer):
         # print(f"Start selecting for user {request.user}",flush=True)
         # tm.handle_one(request.user)
         # print(f"Stop selecting for user {request.user}",flush=True)
-        thread = threading.Thread(
-            target=self.process_ping_one, args=(request,))
-        thread.start()
+        # thread = threading.Thread(
+        #     target=self.process_ping_one, args=(request,))
+        # thread.start()
+
+
+
+        print("Start downloading for one", flush=True)
+        telegram_module.handle_one(request.user)
+        print("Stop downloading for one", flush=True)
+        print("Alerting ML about done work", flush=True)
+        ping_ML_module_one(request.user)
+        print("Alerted ML about donw work", flush=True)
+
+
         return your_proto.Empty()
 
     def process_ping_one(self, ping):
@@ -71,8 +82,14 @@ class SelectorServicer(your_proto_grpc.SelectorServicer):
         print("Alerted ML about donw work", flush=True)
 
     def SelectAll(self, request, context):
-        thread = threading.Thread(target=self.process_ping_all)
-        thread.start()
+
+        print(f"Start selecting for all", flush=True)
+        tm.handle_all()
+        ping_ML_module_all()
+        print(f"Stop selecting for all", flush=True)
+
+        # thread = threading.Thread(target=self.process_ping_all)
+        # thread.start()
         return your_proto.Empty()
 
     def process_ping_all(self):
