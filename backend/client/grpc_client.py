@@ -23,6 +23,29 @@ def pingSelector(selector_id,user_id):
     selector_ping.user = str(user_id)
     response = stub.SelectOne(selector_ping)
 
+def pingSelectorsForUser(user_id,sources):
+    t = threading.Thread(target=pingSelectorsForUserThread, args=(user_id, sources))
+
+
+def pingSelectorsForUserThread(user_id,sources):
+    for source in sources:
+        if (source == 'tg'):
+            host = 'telegram_selector'
+        elif (source == 'vk'):
+            host = 'vk_selector'
+        else:
+            print("There is no social media to select. Check smth", flush=True) 
+            continue
+        
+        
+        channel = grpc.insecure_channel(f'{host}:{"50051"}')
+        stub = your_proto_grpc.SelectorStub(channel)
+        selector_ping = your_proto.User()
+        selector_ping.user = str(user_id)
+        response = stub.SelectOne(selector_ping)
+
+
+
 def pingThread(selector_id,user_id):
     host = ''
     if (selector_id == 0):
